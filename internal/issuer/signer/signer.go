@@ -24,12 +24,13 @@ import (
 	"encoding/pem"
 	"errors"
 	"fmt"
-	"github.com/Keyfactor/ejbca-go-client-sdk/api/ejbca"
-	ejbcaissuer "github.com/Keyfactor/ejbca-issuer/api/v1alpha1"
 	"math/rand"
-	"sigs.k8s.io/controller-runtime/pkg/log"
 	"strings"
 	"time"
+
+	"github.com/Keyfactor/ejbca-go-client-sdk/api/ejbca"
+	ejbcaissuer "github.com/Keyfactor/ejbca-issuer/api/v1alpha1"
+	"sigs.k8s.io/controller-runtime/pkg/log"
 )
 
 type ejbcaSigner struct {
@@ -446,7 +447,7 @@ func compileCertificatesToPemBytes(certificates []*x509.Certificate) ([]byte, []
 				return make([]byte, 0), make([]byte, 0), err
 			}
 		} else {
-			err := pem.Encode(&chain, &pem.Block{
+			err := pem.Encode(&leaf, &pem.Block{
 				Type:  "CERTIFICATE",
 				Bytes: certificate.Raw,
 			})
